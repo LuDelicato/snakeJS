@@ -7,6 +7,13 @@ groundImg.src = 'img/ground.png';
 const foodImg = new Image();
 foodImg.src = 'img/food.png';
 
+const leftAudio = new Audio('audio/left.mp3');
+const upAudio = new Audio('audio/up.mp3');
+const rightAudio = new Audio('audio/right.mp3');
+const downAudio = new Audio('audio/down.mp3');
+const eatAudio = new Audio('audio/eat.mp3');
+const deadAudio = new Audio('audio/dead.mp3');
+
 const boxSize = 32;
 let direction = '';
 
@@ -58,6 +65,7 @@ const gameLogic = setInterval(() => {
   if (snake[0].x === food.x && snake[0].y === food.y) {
     food = randomXY();
     score++;
+    eatAudio.play();
   } else {
     snake.pop();
   }
@@ -82,6 +90,7 @@ const gameLogic = setInterval(() => {
     collisionChecker()
   ) {
     clearInterval(gameLogic);
+    deadAudio.play();
     alert(`GAME OVER! Score: ${score}`);
 
     if (confirm('Wanna play again?')) {
@@ -101,15 +110,19 @@ document.addEventListener('keydown', (e) => {
 
   if (e.keyCode === 37 && direction !== 'right') {
     direction = 'left';
+    rightAudio.play();
   }
 
   if (e.keyCode === 38 && direction !== 'down') {
     direction = 'up';
+    upAudio.play();
   }
   if (e.keyCode === 39 && direction !== 'left') {
     direction = 'right';
+    leftAudio.play();
   }
   if (e.keyCode === 40 && direction !== 'up') {
     direction = 'down';
+    upAudio.play();
   }
 });
